@@ -1,38 +1,18 @@
-import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import { Invocador } from './invocador';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class InvocadorService {
+export class Service {
+// private riotUrl = 'https://br1.api.riotgames.com/lol/platform/v3/champions?api_key=RGAPI-f4468757-2734-4c43-8fb1-9a3b43cecc37';
+  constructor(private http: Http) {}
 
-	private riotUrl = 'https://br1.api.riotgames.com/lol/static-data/v3/champions?api_key=RGAPI-de9df678-4bc5-45e5-bdcd-fe687655b5e3';
-	constructor(private _http: Http) { }
-  	getChampion(): Observable<Champion[]> {
-    return this._http.get(this.riotUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+  getData() {
+    return this.http.get('dados.json')
+      .map((res:Response) => res.json().data)
+        // .do(data => console.log(JSON.stringify(data)));
+
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    return body.data || { };
-  }
-
-  private handleError (error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
-  }
 }
