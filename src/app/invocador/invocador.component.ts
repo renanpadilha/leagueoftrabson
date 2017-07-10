@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InvocadorService } from './invocador.service';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -12,7 +13,7 @@ export class InvocadorComponent {
     invocador: Object;
     nomeInvocador: string;
     stats: Object;
-
+    champions: Object;
     service: InvocadorService;
 
     constructor(service: InvocadorService) {
@@ -21,6 +22,7 @@ export class InvocadorComponent {
 
     buscarInvocador(event) {
         event.preventDefault();
+        this.buscarCampeoes();
         this.service.getSummonerId(this.nomeInvocador)
         .subscribe(invocador => {
             console.log(invocador.id);
@@ -38,11 +40,31 @@ export class InvocadorComponent {
                 stats => {
                     console.log(stats);
                     this.stats = stats.champions;
+                    _.each(this.champions, champ => {
+                        _.each(this.stats, stat => {
+                            if(champ.id === stat.id) {
+                                stat.id = champ.name;
+                            }
+                        });
+                    });
                 },
                 error => {
                     console.log('Erro ao buscar o stats', error); 
                 }
             );
         }
+    }
+
+    buscarCampeoes() {
+        this.service.getChampions()
+        .subscribe(
+            champions => {
+                console.log(champions);
+                this.champions = champions.data;
+            },
+            error => {
+                console.log('Erro ao buscar o stats', error); 
+            }
+        );
     }
 }

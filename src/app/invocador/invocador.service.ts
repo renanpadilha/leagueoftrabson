@@ -20,4 +20,10 @@ export class InvocadorService {
         .map(res => res.json());
     }
 
+    getChampions() {
+        return this.http
+        .get('http://localhost:3000/v1/campeoes')
+        .map(res => res.json());
+    }
+
 }
