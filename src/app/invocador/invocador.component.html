@@ -1,0 +1,35 @@
+<label for="invocador">Invocador</label>
+<input name="invocador" [(ngModel)]="nomeInvocador" type="text">
+<button class="btn btn-primary" (click)="buscarInvocador($event)">Buscar</button>
+
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>Campeão</th>
+      <th>Jogos</th>
+      <th>Vitórias</th>
+      <th>Derrotas</th>
+      <th>Abates</th>
+      <th>Mortes</th>
+      <th>Assistências</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stat of stats">
+      <td>{{stat.id}}</td>
+      <td>{{stat.stats.totalSessionsPlayed}}</td>
+      <td>{{stat.stats.totalSessionsWon}}</td>
+      <td>{{stat.stats.totalSessionsLost}}</td>
+      <td>{{stat.stats.totalChampionKills}}</td>
+      <td>{{stat.stats.totalDeathsPerSession}}</td>
+      <td>{{stat.stats.totalAssists}}</td>
+    </tr>
+  </tbody>
+</table>
+<pre>
+  {{invocador | json}}
+</pre>
+
+<pre>
+{{stats | json}}
+</pre>
