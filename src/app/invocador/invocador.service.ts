@@ -10,19 +10,19 @@ export class InvocadorService {
     }
 
     getSummonerId(nome) {
-        return this.http.get('http://localhost:3000/v1/invocador?nome=' + nome)
+        return this.http.get('https://apinoderiot.herokuapp.com/v1/invocador?nome=' + nome)
         .map(res => res.json());
     }
 
     getStats(summonerId) {
         return this.http
-        .get('http://localhost:3000/v1/stats?id=' + summonerId)
+        .get('https://apinoderiot.herokuapp.com/v1/stats?id=' + summonerId)
         .map(res => res.json());
     }
 
     getChampions() {
         return this.http
-        .get('http://localhost:3000/v1/campeoes')
+        .get('https://apinoderiot.herokuapp.com/v1/campeoes')
         .map(res => res.json());
     }
 
